@@ -5,6 +5,8 @@ import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 
 import apces.psihapp.backend.domain.Profile;
+import apces.psihapp.backend.domain.Question;
+import apces.psihapp.backend.domain.Response;
 
 /**
  * Created by Bogdan-George Craciun on 15.08.2015.
@@ -18,6 +20,8 @@ public class OfyService {
      */
     static {
         factory().register(Profile.class);
+        factory().register(Question.class);
+        factory().register(Response.class);
     }
 
     /**
