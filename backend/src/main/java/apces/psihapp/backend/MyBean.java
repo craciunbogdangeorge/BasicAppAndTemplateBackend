@@ -4,7 +4,6 @@ package apces.psihapp.backend;
  * Copyright (c) 2015 Bogdan-George Craciun. All rights reserved.
  * -----------------------------------------------------------------
  */
-/* ----------------------------------------------------------------- */
 /**
  * The object model for the data we are sending through endpoints
  */

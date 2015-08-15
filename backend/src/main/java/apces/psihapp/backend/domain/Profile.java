@@ -1,6 +1,5 @@
 package apces.psihapp.backend.domain;
 
-import com.google.common.collect.ImmutableList;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -13,7 +12,6 @@ import java.util.List;
  * Copyright (c) 2015 Bogdan-George Craciun. All rights reserved.
  * -----------------------------------------------------------------
  */
-
 @Entity
 @Cache
 public class Profile {
@@ -71,27 +69,6 @@ public class Profile {
 
         if (typeOfUser != null) {
             this.typeOfUser = typeOfUser;
-        }
-    }
-
-    public List<String> getConferenceKeysToAttend() {
-        return ImmutableList.copyOf(conferenceKeysToAttend);
-    }
-
-    public void addToConferenceKeysToAttend(String conferenceKey) {
-        conferenceKeysToAttend.add(conferenceKey);
-    }
-
-    /**
-     * Remove the conferenceKey from conferenceKeysToAttend.
-     *
-     * @param conferenceKey a websafe String representation of the Conference Key
-     */
-    public void unregisterFromConference(String conferenceKey) {
-        if (conferenceKeysToAttend.contains(conferenceKey)) {
-            conferenceKeysToAttend.remove(conferenceKey);
-        } else {
-            throw new IllegalArgumentException("Invalid conferenceKey: " + conferenceKey);
         }
     }
 

@@ -5,6 +5,5 @@ package apces.psihapp.backend;
  * Copyright (c) 2015 Bogdan-George Craciun. All rights reserved.
  * -----------------------------------------------------------------
  */
-/* ----------------------------------------------------------------- */
 public class Constants {
 }
