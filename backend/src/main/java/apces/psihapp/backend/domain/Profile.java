@@ -4,13 +4,13 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
-import java.util.ArrayList;
-import java.util.List;
+import apces.psihapp.backend.form.ProfileForm.TypeOfUser;
 
 /**
  * Created by Bogdan-George Craciun on 15.08.2015.
  * Copyright (c) 2015 Bogdan-George Craciun. All rights reserved.
  * -----------------------------------------------------------------
+ * The Profile which defines a user of the application.
  */
 @Entity
 @Cache
@@ -19,8 +19,6 @@ public class Profile {
     String mainEmail;
 
     TypeOfUser typeOfUser;
-
-    private List<String> conferenceKeysToAttend = new ArrayList<>(0);
 
     @Id
     String userId;
@@ -70,11 +68,6 @@ public class Profile {
         if (typeOfUser != null) {
             this.typeOfUser = typeOfUser;
         }
-    }
-
-    public static enum TypeOfUser {
-        Doctor,
-        Patient,
     }
 }
 

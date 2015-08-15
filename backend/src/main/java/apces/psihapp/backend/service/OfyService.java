@@ -1,10 +1,5 @@
-package apces.psihapp.backend.form;
+package apces.psihapp.backend.service;
 
-/**
- * Created by Bogdan-George Craciun on 15.08.2015.
- * Copyright (c) 2015 Bogdan-George Craciun. All rights reserved.
- * -----------------------------------------------------------------
- */
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
@@ -12,6 +7,9 @@ import com.googlecode.objectify.ObjectifyService;
 import apces.psihapp.backend.domain.Profile;
 
 /**
+ * Created by Bogdan-George Craciun on 15.08.2015.
+ * Copyright (c) 2015 Bogdan-George Craciun. All rights reserved.
+ * -----------------------------------------------------------------
  * Custom Objectify Service that this application should use.
  */
 public class OfyService {

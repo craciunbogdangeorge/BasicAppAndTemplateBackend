@@ -9,6 +9,7 @@ import com.googlecode.objectify.annotation.Id;
  * Created by Bogdan-George Craciun on 15.08.2015.
  * Copyright (c) 2015 Bogdan-George Craciun. All rights reserved.
  * -----------------------------------------------------------------
+ * Wrapper class for an user.
  */
 @Entity
 public class AppEngineUser {
