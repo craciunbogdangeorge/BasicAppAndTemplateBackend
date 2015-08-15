@@ -35,10 +35,10 @@ public class SendConfirmationEmailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
-        String conferenceInfo = request.getParameter("conferenceInfo");
+        String responseInfo = request.getParameter("responseInfo");
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
-        String body = "Hi, you have created a following conference.\n" + conferenceInfo;
+        String body = "Hi, you have received the following response.\n" + responseInfo;
         try {
             Message message = new MimeMessage(session);
             InternetAddress from = new InternetAddress(

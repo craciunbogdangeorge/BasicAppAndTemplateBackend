@@ -80,29 +80,29 @@ public class PsihEndpointApi {
         String mainEmail = user.getEmail();
         String userId = getUserId(user);
 
-        // Get the displayName and teeShirtSize sent by the request
+        // Get the displayName and typeOfUser sent by the request
         String displayName = profileForm.getDisplayName();
-        TypeOfUser teeShirtSize = profileForm.getTypeOfUser();
+        TypeOfUser typeOfUser = profileForm.getTypeOfUser();
 
         // Get the Profile entity from the datastore if exists
         // otherwise create a new one
         Profile profile = ofy().load().key(Key.create(Profile.class, userId)).now();
 
         if (profile == null) {
-            // Set the displayName and teeShirtSize with default values
+            // Set the displayName and typeOfUser with default values
             // if not sent in the request
             if (displayName == null) {
                 displayName = extractDefaultDisplayNameFromEmail(user.getEmail());
             }
-            if (teeShirtSize == null) {
-                teeShirtSize = TypeOfUser.NOT_SPECIFIED;
+            if (typeOfUser == null) {
+                typeOfUser = TypeOfUser.NOT_SPECIFIED;
             }
             // Create a new Profile entity
-            profile = new Profile(userId, displayName, mainEmail, teeShirtSize);
+            profile = new Profile(userId, displayName, mainEmail, typeOfUser);
         } else {
             // The Profile entity already exists
             // Update the Profile entity
-            profile.update(displayName, teeShirtSize);
+            profile.update(displayName, typeOfUser);
         }
 
         // Save the Profile entity in the datastore
