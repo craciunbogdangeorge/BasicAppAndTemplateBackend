@@ -14,7 +14,6 @@ import android.view.ViewGroup;
  * Copyright (c) 2015 Bogdan-George Craciun. All rights reserved.
  * -----------------------------------------------------------------
  */
-/* ----------------------------------------------------------------- */
 @SuppressWarnings("deprecation")
 public class MainActivity extends ActionBarActivity {
 
