@@ -10,9 +10,13 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.Work;
 
 import java.util.logging.Logger;
 
@@ -22,9 +26,14 @@ import apces.psihapp.backend.Constants;
 import apces.psihapp.backend.MyBean;
 import apces.psihapp.backend.domain.AppEngineUser;
 import apces.psihapp.backend.domain.Profile;
+import apces.psihapp.backend.domain.Question;
+import apces.psihapp.backend.domain.Response;
 import apces.psihapp.backend.form.ProfileForm;
 import apces.psihapp.backend.form.ProfileForm.TypeOfUser;
+import apces.psihapp.backend.form.QuestionForm;
+import apces.psihapp.backend.form.ResponseForm;
 
+import static apces.psihapp.backend.service.OfyService.factory;
 import static apces.psihapp.backend.service.OfyService.ofy;
 
 /**
@@ -33,27 +42,20 @@ import static apces.psihapp.backend.service.OfyService.ofy;
  * -----------------------------------------------------------------
  * Main endpoint api class exposed.
  */
+
 /**
  * An endpoint class we are exposing
  */
 @Api(name = "psihEndpointApi", version = "v1", namespace = @ApiNamespace(ownerDomain = "backend.psihapp.apces", ownerName = "backend.psihapp.apces", packagePath = ""),
-        scopes = { Constants.EMAIL_SCOPE },
+        scopes = {Constants.EMAIL_SCOPE},
         clientIds = {
                 Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID,
-                Constants.API_EXPLORER_CLIENT_ID },
-        audiences = { Constants.ANDROID_AUDIENCE },
+                Constants.API_EXPLORER_CLIENT_ID},
+        audiences = {Constants.ANDROID_AUDIENCE},
         description = "API for the PsihApp Backend application.")
 public class PsihEndpointApi {
 
     private static final Logger LOG = Logger.getLogger(PsihEndpointApi.class.getName());
-
-    /*
-     * Get the display name from the user's email. For example, if the email is
-     * lemoncake@example.com, then the display name becomes "lemoncake."
-     */
-    private static String extractDefaultDisplayNameFromEmail(String email) {
-        return email == null ? null : email.substring(0, email.indexOf("@"));
-    }
 
     /**
      * Creates or updates a Profile object associated with the given user
@@ -131,6 +133,118 @@ public class PsihEndpointApi {
         Key key = Key.create(Profile.class, userId);
 
         return (Profile) ofy().load().key(key).now();
+    }
+
+    @ApiMethod(name = "createResponse", path = "response", httpMethod = ApiMethod.HttpMethod.POST)
+    public Response createResponse(final User user, final ResponseForm responseForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+
+        // Get the userId of the logged in User
+        final String userId = getUserId(user);
+
+        // Get the key for the User's Profile
+        Key<Profile> profileKey = Key.create(Profile.class, getUserId(user));
+
+        // Allocate a key for the response -- let App Engine allocate the ID
+        // Don't forget to include the parent Profile in the allocated ID
+        final Key<Response> responseKey = factory().allocateId(profileKey, Response.class);
+
+        // Get the Response Id from the Key
+        final long responseKeyId = responseKey.getId();
+
+        // Get the default queue
+        final Queue queue = QueueFactory.getDefaultQueue();
+
+        // Start a transaction
+        Response response;
+        response = ofy().transact(new Work<Response>() {
+            @Override
+            public Response run() {
+
+                // Get the existing Profile entity for the current user if there is one
+                // Otherwise create a new Profile entity with default values
+                Profile profile = getProfileFromUser(user);
+
+                // Create a new Response Entity, specifying the user's Profile entity
+                // as the parent of the response
+                Response response = new Response(responseKeyId, userId, responseForm);
+
+                // Save Response and Profile Entities
+                ofy().save().entities(response, profile).now();
+
+                queue.add(ofy().getTransaction(),
+                        TaskOptions.Builder.withUrl("/tasks/send_confirmation_email")
+                                .param("email", profile.getMainEmail())
+                                .param("topicInfo", response.toString()));
+
+                return response;
+            }
+        });
+
+        return response;
+    }
+
+    @ApiMethod(name = "createQuestion", path = "question", httpMethod = ApiMethod.HttpMethod.POST)
+    public Question createQuestion(final User user, final QuestionForm questionForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+
+        // Get the userId of the logged in User
+        final String userId = getUserId(user);
+
+        // Get the key for the User's Profile
+        Key<Profile> profileKey = Key.create(Profile.class, getUserId(user));
+
+        // Allocate a key for the question -- let App Engine allocate the ID
+        // Don't forget to include the parent Profile in the allocated ID
+        final Key<Question> questionKey = factory().allocateId(profileKey, Question.class);
+
+        // Get the Question Id from the Key
+        final long questionKeyId = questionKey.getId();
+
+        // Get the default queue
+        final Queue queue = QueueFactory.getDefaultQueue();
+
+        // Start a transaction
+        Question question;
+        question = ofy().transact(new Work<Question>() {
+            @Override
+            public Question run() {
+
+                // Get the existing Profile entity for the current user if there is one
+                // Otherwise create a new Profile entity with default values
+                Profile profile = getProfileFromUser(user);
+
+                // Create a new Question Entity, specifying the user's Profile entity
+                // as the parent of the question
+                Question question = new Question(questionKeyId, userId, questionForm);
+
+                // Save Question and Profile Entities
+                ofy().save().entities(question, profile).now();
+
+                queue.add(ofy().getTransaction(),
+                        TaskOptions.Builder.withUrl("/tasks/send_confirmation_email")
+                                .param("email", profile.getMainEmail())
+                                .param("topicInfo", question.toString()));
+
+                return question;
+            }
+        });
+
+        return question;
+    }
+
+    /*
+     * Get the display name from the user's email. For example, if the email is
+     * lemoncake@example.com, then the display name becomes "lemoncake."
+     */
+    private static String extractDefaultDisplayNameFromEmail(String email) {
+        return email == null ? null : email.substring(0, email.indexOf("@"));
     }
 
     /**
