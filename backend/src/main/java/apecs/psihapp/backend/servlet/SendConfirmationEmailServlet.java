@@ -1,4 +1,4 @@
-package apces.psihapp.backend.servlet;
+package apecs.psihapp.backend.servlet;
 
 import com.google.appengine.api.utils.SystemProperty;
 

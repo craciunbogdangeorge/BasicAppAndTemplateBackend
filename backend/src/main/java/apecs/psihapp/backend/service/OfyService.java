@@ -1,12 +1,12 @@
-package apces.psihapp.backend.service;
+package apecs.psihapp.backend.service;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 
-import apces.psihapp.backend.domain.Profile;
-import apces.psihapp.backend.domain.Question;
-import apces.psihapp.backend.domain.Response;
+import apecs.psihapp.backend.domain.Profile;
+import apecs.psihapp.backend.domain.Question;
+import apecs.psihapp.backend.domain.Response;
 
 /**
  * Created by Bogdan-George Craciun on 15.08.2015.

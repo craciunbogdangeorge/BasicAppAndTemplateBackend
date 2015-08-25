@@ -1,4 +1,4 @@
-package apces.psihapp.backend.domain;
+package apecs.psihapp.backend.domain;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;

@@ -1,4 +1,4 @@
-package apces.psihapp.backend.spi;
+package apecs.psihapp.backend.spi;
 
 /*
    For step-by-step instructions on connecting your Android application to this backend module,
@@ -22,19 +22,19 @@ import java.util.logging.Logger;
 
 import javax.inject.Named;
 
-import apces.psihapp.backend.Constants;
-import apces.psihapp.backend.MyBean;
-import apces.psihapp.backend.domain.AppEngineUser;
-import apces.psihapp.backend.domain.Profile;
-import apces.psihapp.backend.domain.Question;
-import apces.psihapp.backend.domain.Response;
-import apces.psihapp.backend.form.ProfileForm;
-import apces.psihapp.backend.form.ProfileForm.TypeOfUser;
-import apces.psihapp.backend.form.QuestionForm;
-import apces.psihapp.backend.form.ResponseForm;
+import apecs.psihapp.backend.Constants;
+import apecs.psihapp.backend.MyBean;
+import apecs.psihapp.backend.domain.AppEngineUser;
+import apecs.psihapp.backend.domain.Profile;
+import apecs.psihapp.backend.domain.Question;
+import apecs.psihapp.backend.domain.Response;
+import apecs.psihapp.backend.form.ProfileForm;
+import apecs.psihapp.backend.form.ProfileForm.TypeOfUser;
+import apecs.psihapp.backend.form.QuestionForm;
+import apecs.psihapp.backend.form.ResponseForm;
 
-import static apces.psihapp.backend.service.OfyService.factory;
-import static apces.psihapp.backend.service.OfyService.ofy;
+import static apecs.psihapp.backend.service.OfyService.factory;
+import static apecs.psihapp.backend.service.OfyService.ofy;
 
 /**
  * Created by Bogdan-George Craciun on 15.08.2015.
@@ -46,7 +46,7 @@ import static apces.psihapp.backend.service.OfyService.ofy;
 /**
  * An endpoint class we are exposing
  */
-@Api(name = "psihEndpointApi", version = "v1", namespace = @ApiNamespace(ownerDomain = "backend.psihapp.apces", ownerName = "backend.psihapp.apces", packagePath = ""),
+@Api(name = "psihEndpointApi", version = "v1", namespace = @ApiNamespace(ownerDomain = "backend.psihapp.apecs", ownerName = "backend.psihapp.apecs", packagePath = ""),
         scopes = {Constants.EMAIL_SCOPE},
         clientIds = {
                 Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID,

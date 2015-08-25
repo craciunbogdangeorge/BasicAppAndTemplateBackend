@@ -1,4 +1,4 @@
-package apces.psihapp.backend.domain;
+package apecs.psihapp.backend.domain;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
@@ -14,9 +14,9 @@ import com.googlecode.objectify.annotation.Parent;
 import java.util.Date;
 import java.util.List;
 
-import apces.psihapp.backend.form.QuestionForm;
+import apecs.psihapp.backend.form.QuestionForm;
 
-import static apces.psihapp.backend.service.OfyService.ofy;
+import static apecs.psihapp.backend.service.OfyService.ofy;
 
 /**
  * Created by Bogdan-George Craciun on 15.08.2015.

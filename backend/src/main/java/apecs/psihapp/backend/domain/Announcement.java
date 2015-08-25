@@ -1,4 +1,4 @@
-package apces.psihapp.backend.domain;
+package apecs.psihapp.backend.domain;
 
 /**
  * Created by Bogdan-George Craciun on 15.08.2015.

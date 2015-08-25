@@ -1,10 +1,10 @@
-package apces.psihapp.backend.domain;
+package apecs.psihapp.backend.domain;
 
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
-import apces.psihapp.backend.form.ProfileForm.TypeOfUser;
+import apecs.psihapp.backend.form.ProfileForm.TypeOfUser;
 
 /**
  * Created by Bogdan-George Craciun on 15.08.2015.

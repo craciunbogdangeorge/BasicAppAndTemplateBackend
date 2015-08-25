@@ -1,4 +1,4 @@
-package apces.psihapp.backend;
+package apecs.psihapp.backend;
 
 import com.google.api.server.spi.Constant;
 

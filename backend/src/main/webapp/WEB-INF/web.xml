@@ -5,7 +5,7 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>apces.psihapp.backend.spi.PsihEndpointApi</param-value>
+            <param-value>apecs.psihapp.backend.spi.PsihEndpointApi</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
